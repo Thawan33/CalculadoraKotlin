@@ -197,6 +197,7 @@
         android:text="1"
         android:textColor="#F44336"
         app:layout_constraintBottom_toBottomOf="@+id/buttonCalc2"
-        app:layout_constraintEnd_toStartOf="@+id/buttonCalc5" />
+        app:layout_constraintEnd_toStartOf="@+id/buttonCalc5"
+        tools:ignore="OnClick" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
