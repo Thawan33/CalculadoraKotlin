@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
         }
         textCalc = findViewById(R.id.textCalc)
 
+        val btn0 = findViewById<Button>(R.id.buttonCalc0)
         val btn1 = findViewById<Button>(R.id.buttonCalc1)
         val btn2 = findViewById<Button>(R.id.buttonCalc2)
         val btn3 = findViewById<Button>(R.id.buttonCalc3)
@@ -34,7 +35,10 @@ class MainActivity : AppCompatActivity() {
         val btn7 = findViewById<Button>(R.id.buttonCalc7)
         val btn8 = findViewById<Button>(R.id.buttonCalc8)
         val btn9 = findViewById<Button>(R.id.buttonCalc9)
+        val btnComma = findViewById<Button>(R.id.buttonCalcComma)
+        val btnErase = findViewById<Button>(R.id.buttonCalcBack)
 
+        btn0.setOnClickListener { appendNumber("0") }
         btn1.setOnClickListener { appendNumber("1") }
         btn2.setOnClickListener { appendNumber("2") }
         btn3.setOnClickListener { appendNumber("3") }
@@ -44,10 +48,20 @@ class MainActivity : AppCompatActivity() {
         btn7.setOnClickListener { appendNumber("7") }
         btn8.setOnClickListener { appendNumber("8") }
         btn9.setOnClickListener { appendNumber("9") }
+        btnComma.setOnClickListener { appendNumber(".") }
+        btnErase.setOnClickListener { deleteNum() }
     }
     private fun appendNumber(num: String) {
-        currentInput += num
-        textCalc.text = currentInput
+        if (num !in currentInput || num != "."){
+            currentInput += num
+            textCalc.text = currentInput
+        }
+        println(currentInput)
+        println(currentInput.toDoubleOrNull())
     }
 
+    private fun deleteNum() {
+        currentInput = currentInput.dropLast(1)
+        textCalc.text = currentInput
+    }
 }

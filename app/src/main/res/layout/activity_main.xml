@@ -11,13 +11,13 @@
         android:id="@+id/textCalc"
         android:layout_width="0dp"
         android:layout_height="32dp"
-        android:layout_marginStart="250dp"
         android:layout_marginTop="24dp"
         android:text="000"
+        android:textAlignment="textEnd"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintEnd_toEndOf="@id/rightGuide"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/leftGuide"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -68,6 +68,39 @@
         app:layout_constraintEnd_toEndOf="@+id/buttonCalc5"
         app:layout_constraintStart_toStartOf="@+id/buttonCalc5"
         app:layout_constraintTop_toBottomOf="@+id/buttonCalc5" />
+
+    <Button
+        android:id="@+id/buttonCalc0"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:text="0"
+        android:textColor="#F44336"
+        app:layout_constraintEnd_toEndOf="@+id/buttonCalc2"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/buttonCalc2"
+        app:layout_constraintTop_toBottomOf="@+id/buttonCalc2" />
+
+    <Button
+        android:id="@+id/buttonCalcComma"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:text=","
+        android:textColor="#F44336"
+        app:layout_constraintEnd_toStartOf="@+id/buttonCalcAdd"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/buttonCalc2"
+        app:layout_constraintTop_toBottomOf="@+id/buttonCalc3" />
+
+    <Button
+        android:id="@+id/buttonCalcEquals"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:text="="
+        android:textColor="#F44336"
+        app:layout_constraintEnd_toEndOf="@+id/buttonCalcAdd"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/buttonCalcAdd"
+        app:layout_constraintTop_toBottomOf="@+id/buttonCalcAdd" />
 
     <Button
         android:id="@+id/buttonCalc8"
