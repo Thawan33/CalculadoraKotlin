@@ -35,8 +35,14 @@ class MainActivity : AppCompatActivity() {
         val btn7 = findViewById<Button>(R.id.buttonCalc7)
         val btn8 = findViewById<Button>(R.id.buttonCalc8)
         val btn9 = findViewById<Button>(R.id.buttonCalc9)
+        val btnadd = findViewById<Button>(R.id.buttonCalcAdd)
+        val btnsub = findViewById<Button>(R.id.buttonCalcSub)
+        val btnmul = findViewById<Button>(R.id.buttonCalcMul)
+        val btndiv = findViewById<Button>(R.id.buttonCalcDiv)
         val btnComma = findViewById<Button>(R.id.buttonCalcComma)
         val btnErase = findViewById<Button>(R.id.buttonCalcBack)
+        val btnEqual = findViewById<Button>(R.id.buttonCalcEquals)
+
 
         btn0.setOnClickListener { appendNumber("0") }
         btn1.setOnClickListener { appendNumber("1") }
@@ -48,20 +54,84 @@ class MainActivity : AppCompatActivity() {
         btn7.setOnClickListener { appendNumber("7") }
         btn8.setOnClickListener { appendNumber("8") }
         btn9.setOnClickListener { appendNumber("9") }
+        btnadd.setOnClickListener { appendOperator("+") }
+        btnsub.setOnClickListener { appendOperator("-") }
+        btnmul.setOnClickListener { appendOperator("x") }
+        btndiv.setOnClickListener { appendOperator("/") }
         btnComma.setOnClickListener { appendNumber(".") }
         btnErase.setOnClickListener { deleteNum() }
+        btnEqual.setOnClickListener { calculateExpression() }
+
+
     }
     private fun appendNumber(num: String) {
-        if (num !in currentInput || num != "."){
-            currentInput += num
+        val lastNumber = currentInput.split(" ", "+", "-", "x", "/").lastOrNull() ?: ""
+        if (num == "." && lastNumber.contains(".")) return
+        currentInput += num
+        textCalc.text = currentInput
+    }
+    private fun appendOperator(op: String) {
+        if (currentInput.isNotEmpty()) {
+            currentInput += " $op "
             textCalc.text = currentInput
         }
-        println(currentInput)
-        println(currentInput.toDoubleOrNull())
     }
 
     private fun deleteNum() {
         currentInput = currentInput.dropLast(1)
         textCalc.text = currentInput
+    }
+    private fun calculateExpression() {
+        try{
+            val tokens = currentInput.split(" ")
+
+            if (tokens.isEmpty()) return
+
+            val values = tokens.filterIndexed { index, _ -> index % 2 == 0 }.map { it.toDouble() }.toMutableList()
+            val ops = tokens.filterIndexed { index, _ -> index % 2 != 0 }.toMutableList()
+
+            var i = 0
+            while (i < ops.size) {
+                when (ops[i]) {
+                    "x" -> {
+                        values[i] = math.multiply(values[i], values[i + 1])
+                        values.removeAt(i + 1)
+                        ops.removeAt(i)
+                        i--
+                    }
+                    "/" -> {
+                        values[i] = math.divide(values[i], values[i + 1])
+                        values.removeAt(i + 1)
+                        ops.removeAt(i)
+                        i--
+                    }
+                }
+                i++
+            }
+            i = 0
+            while (i < ops.size) {
+                when (ops[i]) {
+                    "+" -> {
+                        values[i] = math.addition(values[i], values[i + 1])
+                        values.removeAt(i + 1)
+                        ops.removeAt(i)
+                        i--
+                    }
+                    "-" -> {
+                        values[i] = math.subtract(values[i], values[i + 1])
+                        values.removeAt(i + 1)
+                        ops.removeAt(i)
+                        i--
+                    }
+                }
+                i++
+            }
+            val result = values.firstOrNull() ?: 0.0
+            textCalc.text = result.toString()
+            currentInput = result.toString()
+        } catch (e: Exception) {
+            textCalc.text = "Error"
+            currentInput = ""
+        }
     }
 }

@@ -190,7 +190,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/buttonCalc3"
         app:layout_constraintStart_toEndOf="@+id/buttonCalc3"
         app:layout_constraintTop_toBottomOf="@+id/buttonCalc6"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/buttonCalcDiv"
