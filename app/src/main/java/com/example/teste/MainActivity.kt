@@ -42,6 +42,7 @@ class MainActivity : AppCompatActivity() {
         val btnComma = findViewById<Button>(R.id.buttonCalcComma)
         val btnErase = findViewById<Button>(R.id.buttonCalcBack)
         val btnEqual = findViewById<Button>(R.id.buttonCalcEquals)
+        val bntC = findViewById<Button>(R.id.buttonCalcC)
 
 
         btn0.setOnClickListener { appendNumber("0") }
@@ -60,6 +61,7 @@ class MainActivity : AppCompatActivity() {
         btndiv.setOnClickListener { appendOperator("/") }
         btnComma.setOnClickListener { appendNumber(".") }
         btnErase.setOnClickListener { deleteNum() }
+        bntC.setOnClickListener { deleteall() }
         btnEqual.setOnClickListener { calculateExpression() }
 
 
@@ -79,6 +81,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun deleteNum() {
         currentInput = currentInput.dropLast(1)
+        textCalc.text = currentInput
+    }
+    private fun deleteall() {
+        currentInput = ""
         textCalc.text = currentInput
     }
     private fun calculateExpression() {
