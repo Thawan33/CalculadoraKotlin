@@ -68,12 +68,18 @@ class MainActivity : AppCompatActivity() {
 
     }
     private fun appendNumber(num: String) {
+        val lastBlock = currentInput.split(" ").lastOrNull() ?: ""
+        if (lastBlock.length >= 15) {
+            Toast.makeText(this, "Máximo de 15 dígitos por número", Toast.LENGTH_SHORT).show()
+            return
+        }
         val lastNumber = currentInput.split(" ", "+", "-", "x", "/").lastOrNull() ?: ""
         if (num == "." && lastNumber.contains(".")) return
         currentInput += num
         textCalc.text = currentInput
     }
     private fun appendOperator(op: String) {
+
         val trimmedInput = currentInput.trim()
         if (trimmedInput.isNotEmpty()) {
             val lastChar = trimmedInput.last()
