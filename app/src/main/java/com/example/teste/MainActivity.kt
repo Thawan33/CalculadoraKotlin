@@ -3,6 +3,7 @@ package com.example.teste
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -73,9 +74,13 @@ class MainActivity : AppCompatActivity() {
         textCalc.text = currentInput
     }
     private fun appendOperator(op: String) {
-        if (currentInput.isNotEmpty()) {
-            currentInput += " $op "
-            textCalc.text = currentInput
+        val trimmedInput = currentInput.trim()
+        if (trimmedInput.isNotEmpty()) {
+            val lastChar = trimmedInput.last()
+            if (lastChar != '+' && lastChar != '-' && lastChar != 'x' && lastChar != '/') {
+                currentInput += " $op "
+                textCalc.text = currentInput
+            }
         }
     }
 
@@ -89,9 +94,16 @@ class MainActivity : AppCompatActivity() {
     }
     private fun calculateExpression() {
         try{
+            val trimmedInput = currentInput.trim()
             val tokens = currentInput.split(" ")
 
             if (tokens.isEmpty()) return
+
+            if (trimmedInput.last() in listOf('+', '-', 'x', '/')) {
+                Toast.makeText(this, "Último caractere não pode ser operador!", Toast.LENGTH_SHORT).show()
+                return
+            }
+
 
             val values = tokens.filterIndexed { index, _ -> index % 2 == 0 }.map { it.toDouble() }.toMutableList()
             val ops = tokens.filterIndexed { index, _ -> index % 2 != 0 }.toMutableList()
